@@ -120,4 +120,24 @@ public class BasicLogger extends AbstractLogger
 	{
 		handlersList.addAll(collection);
 	}
+	
+
+	/**
+	 * Définit si on doit afficher les messages de debug.
+	 * 
+	 * @param debug <code>true</code> s'il faut afficher les messages de debug,
+	 *        <code>false</code> sinon.
+	 */
+	public void setShouldPrintDebug(boolean debug)
+	{
+		shouldPrintDebug = debug;
+	}
+
+	/**
+	 * Si les messages de debug sont affichés, les cache, et vice versa.
+	 */
+	public void toggleDebug()
+	{
+		shouldPrintDebug = !shouldPrintDebug;
+	}
 }
