@@ -5,25 +5,51 @@ public enum LogLevel
 	/**
 	 * Une information basique.
 	 */
-	INFO,
+	INFO(0x000000),
 	
 	/**
 	 * Une réussite !
 	 */
-	SUCCESS,
+	SUCCESS(0x4ED714),
 	
 	/**
 	 * Un message d'avertissement.
 	 */
-	WARNING,
+	WARNING(0xffc800),
 	
 	/**
 	 * Un message d'erreur.
 	 */
-	ERROR,
+	ERROR(0xff0000),
 	
 	/**
 	 * Un message de debug.
 	 */
-	DEBUG;
+	DEBUG(0x00A84E);
+	
+	private int logColor;
+	
+	/**
+	 * @param color La couleur par défaut d'un log de ce niveau.
+	 */
+	private LogLevel(int color)
+	{
+		logColor = color;
+	}
+
+	/**
+	 * @return La couleur par défaut d'un log de ce niveau.
+	 */
+	public int getLogColor()
+	{
+		return logColor;
+	}
+
+	/**
+	 * Définit la couleur par défaut d'un log de ce niveau.
+	 */
+	public void setLogColor(int logColor)
+	{
+		this.logColor = logColor;
+	}
 }
