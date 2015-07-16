@@ -19,24 +19,16 @@ public class BasicLogger extends AbstractLogger
 	 * Le nom du logger courant.
 	 */
 	protected String loggerName;
-
-	/**
-	 * <code>true</code> s'il faut afficher les messages de debug,
-	 * <code>false</code> sinon.
-	 */
-	protected boolean shouldPrintDebug;
-
+	
 	/**
 	 * Créé une nouvelle instance d'un BasicLogger. Est appelé uniquement par
 	 * {@link LoggerFactory}.
 	 * 
 	 * @param name Le nom désiré.
-	 * @param debug <code>true</code> s'il faut afficher le debug.
 	 */
-	protected BasicLogger(String name, boolean debug)
+	protected BasicLogger(String name)
 	{
 		loggerName = name;
-		shouldPrintDebug = debug;
 	}
 
 	@Override
@@ -45,7 +37,7 @@ public class BasicLogger extends AbstractLogger
 	 */
 	public void log(LogLevel level, String msg, Object... args)
 	{
-		if (level.equals(LogLevel.DEBUG) && !shouldPrintDebug)
+		if (level.getIntLevel() < LoggerFactory.minLogLevel)
 		{
 			return;
 		}
@@ -72,7 +64,7 @@ public class BasicLogger extends AbstractLogger
 	 */
 	public void log(LogLevel level, String msg, Throwable th)
 	{
-		if (level.equals(LogLevel.DEBUG) && !shouldPrintDebug)
+		if (level.getIntLevel() < LoggerFactory.minLogLevel)
 		{
 			return;
 		}
@@ -101,24 +93,5 @@ public class BasicLogger extends AbstractLogger
 		builder.append(msg);
 
 		return builder.toString();
-	}
-
-	/**
-	 * Définit si on doit afficher les messages de debug.
-	 * 
-	 * @param debug <code>true</code> s'il faut afficher les messages de debug,
-	 *        <code>false</code> sinon.
-	 */
-	public void setShouldPrintDebug(boolean debug)
-	{
-		shouldPrintDebug = debug;
-	}
-
-	/**
-	 * Si les messages de debug sont affichés, les cache, et vice versa.
-	 */
-	public void toggleDebug()
-	{
-		shouldPrintDebug = !shouldPrintDebug;
 	}
 }

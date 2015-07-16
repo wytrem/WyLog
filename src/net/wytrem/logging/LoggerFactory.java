@@ -9,6 +9,11 @@ import java.util.ArrayList;
 public class LoggerFactory
 {
 	/**
+	 * Le niveau minimal nécessaire pour qu'un log soit affiché.
+	 */
+	public static int minLogLevel = LogLevel.INFO.getIntLevel();
+
+	/**
 	 * Liste de tous les handlers qui doivent être appliqués aux loggers créés.
 	 */
 	public static final ArrayList<ILogHandler> sharedHandlers = new ArrayList<ILogHandler>() {
@@ -18,11 +23,6 @@ public class LoggerFactory
 			add(handler);
 		}
 	};
-
-	/**
-	 * <code>true</code> si on active le debug sur tous les loggers fabriqués.
-	 */
-	private static boolean DEFAULT_DEBUG_STATE = false;
 
 	/**
 	 * Ajoute un délégateur de logging dans un fichier.
@@ -56,24 +56,12 @@ public class LoggerFactory
 	 */
 	public static final BasicLogger getLogger(String name)
 	{
-		return getLogger(name, DEFAULT_DEBUG_STATE);
+		return new BasicLogger(name);
 	}
 
 	/**
-	 * Crée un nouveau logger qui aura le nom donné et qui loggera le debug ou
-	 * non.
-	 * 
-	 * @param name Le nom du nouveau logger.
-	 * @param debug <code>true</code> s'il faut afficher les messages debug.
-	 * @return Le nouveau logger fraîchement créé.
-	 */
-	public static final BasicLogger getLogger(String name, boolean debug)
-	{
-		return new BasicLogger(name, debug);
-	}
-
-	/**
-	 * Crée un nouveau logger qui aura le nom de la classe donnée.
+	 * Crée un nouveau logger qui aura le nom de la classe donnée et qui loggera
+	 * le debug ou non.
 	 * 
 	 * Typiquement, on pourra l'appeler de cette manière au début des classes
 	 * qui ont besoin d'un logger : <code>
@@ -85,26 +73,16 @@ public class LoggerFactory
 	 */
 	public static final BasicLogger getLogger(Class<?> clazz)
 	{
-		return getLogger(clazz, DEFAULT_DEBUG_STATE);
+		return getLogger(clazz.getSimpleName());
 	}
 
 	/**
-	 * Crée un nouveau logger qui aura le nom de la classe donnée et qui loggera
-	 * le debug ou non.
+	 * Définit le niveau minimal d'un log affiché.
 	 * 
-	 * Typiquement, on pourra l'appeler de cette manière au début des classes
-	 * qui ont besoin d'un logger : <code>
-	 * private static final BasicLogger logger = LoggerFactory.getLogger(LaClassOuOnEst.class, true);
-	 * </code>
-	 * 
-	 * S'afficheront ainsi les messages de debug.
-	 * 
-	 * @param clazz La class pour laquelle il servira.
-	 * @param debug <code>true</code> s'il faut afficher les messages debug.
-	 * @return Le nouveau logger fraîchement créé.
+	 * @param lvl Le niveau souhaité, voir {@link LogLevel#getIntLevel()}
 	 */
-	public static final BasicLogger getLogger(Class<?> clazz, boolean debug)
+	public static void setMinLogLevel(int lvl)
 	{
-		return getLogger(clazz.getSimpleName(), debug);
+		minLogLevel = lvl;
 	}
 }

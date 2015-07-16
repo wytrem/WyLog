@@ -22,5 +22,4 @@ public interface ILogHandler
 	 * @param th Throwable à afficher.
 	 */
 	public void broadcastThrowable(LogLevel level, Throwable th);
-
 }
