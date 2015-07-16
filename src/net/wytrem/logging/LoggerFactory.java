@@ -5,12 +5,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class LoggerFactory
 {
 	/**
 	 * Liste de tous les handlers qui doivent être appliqués aux loggers créés.
 	 */
-	private static final ArrayList<ILogHandler> sharedHandlers = new ArrayList<ILogHandler>() {
+	public static final ArrayList<ILogHandler> sharedHandlers = new ArrayList<ILogHandler>() {
 		private static final long serialVersionUID = 1L;
 		{
 			ConsoleHandler handler = new ConsoleHandler();
@@ -35,10 +36,10 @@ public class LoggerFactory
 		FileHandler handler = new FileHandler(loggingFile);
 
 		sharedHandlers.add(handler);
-		
+
 		return handler;
 	}
-	
+
 	/**
 	 * Ajoute un délégateur de logging commun.
 	 */
@@ -68,9 +69,7 @@ public class LoggerFactory
 	 */
 	public static final BasicLogger getLogger(String name, boolean debug)
 	{
-		BasicLogger logger = new BasicLogger(name, debug);
-		logger.addAll(sharedHandlers);
-		return logger;
+		return new BasicLogger(name, debug);
 	}
 
 	/**

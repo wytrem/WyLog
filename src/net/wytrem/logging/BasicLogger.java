@@ -1,10 +1,9 @@
 package net.wytrem.logging;
 
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
+import static net.wytrem.logging.LoggerFactory.sharedHandlers;
 
+import java.text.SimpleDateFormat;
 
 /**
  * Implémentation basique de {@link AbstractLogger}.
@@ -15,11 +14,6 @@ public class BasicLogger extends AbstractLogger
 	 * Formattera la date pour nous.
 	 */
 	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-	/**
-	 * Liste des handlers qui afficheront les logs.
-	 */
-	protected ArrayList<ILogHandler> handlersList;
 
 	/**
 	 * Le nom du logger courant.
@@ -41,7 +35,6 @@ public class BasicLogger extends AbstractLogger
 	 */
 	protected BasicLogger(String name, boolean debug)
 	{
-		handlersList = new ArrayList<>();
 		loggerName = name;
 		shouldPrintDebug = debug;
 	}
@@ -67,7 +60,7 @@ public class BasicLogger extends AbstractLogger
 	 */
 	private void broadcastLog(LogLevel level, String format)
 	{
-		for (ILogHandler handler : handlersList)
+		for (ILogHandler handler : sharedHandlers)
 		{
 			handler.broadcastLog(level, format);
 		}
@@ -86,7 +79,7 @@ public class BasicLogger extends AbstractLogger
 
 		log(level, msg);
 
-		for (ILogHandler handler : handlersList)
+		for (ILogHandler handler : sharedHandlers)
 		{
 			handler.broadcastThrowable(level, th);
 		}
@@ -109,18 +102,6 @@ public class BasicLogger extends AbstractLogger
 
 		return builder.toString();
 	}
-
-	/**
-	 * Ajoute tous les handlers présents dans la collection passée en argument à
-	 * la liste du logger.
-	 * 
-	 * @param collection La liste des handlers à ajouter.
-	 */
-	public void addAll(Collection<? extends ILogHandler> collection)
-	{
-		handlersList.addAll(collection);
-	}
-	
 
 	/**
 	 * Définit si on doit afficher les messages de debug.
