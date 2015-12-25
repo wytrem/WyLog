@@ -1,0 +1,41 @@
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'maven-publish'
+
+group = 'net.wytrem'
+version = '1.1'
+archivesBaseName = 'wylog'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+publishing {
+    repositories {
+        maven {
+            url "${System.properties['user.home']}/Wytrem.github.io/maven/"
+        }
+    }
+}
+
