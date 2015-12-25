@@ -6,9 +6,9 @@ import static net.wytrem.logging.LoggerFactory.sharedHandlers;
 import java.text.SimpleDateFormat;
 
 /**
- * Implémentation basique de {@link AbstractLogger}.
+ * Implémentation basique de {@link Logger}.
  */
-public class BasicLogger extends AbstractLogger
+public class BasicLogger extends Logger
 {
 	/**
 	 * Formattera la date pour nous.

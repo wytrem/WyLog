@@ -1,6 +1,6 @@
 package net.wytrem.logging;
 
-public abstract class AbstractLogger
+public abstract class Logger
 {
 	/**
 	 * Affiche un log avec le niveau donné.

@@ -4,9 +4,10 @@ package net.wytrem.logging;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
-public class LoggerFactory
+public abstract class LoggerFactory
 {
 	/**
 	 * Le niveau minimal nécessaire pour qu'un log soit affiché.
@@ -15,6 +16,13 @@ public class LoggerFactory
 
 	/**
 	 * Liste de tous les handlers qui doivent être appliqués aux loggers créés.
+	 * 
+	 * Elle est statique et récupérée par tous les loggers dès qu'une de leurs
+	 * méthodes est appelée.
+	 * 
+	 * Une autre implémentation possible aurait été un champ non statique, dans
+	 * chaque {@link Logger}, mais celà pose des problèmes d'initialisation, les
+	 * champs {@link Logger} étant généralement déclarés statiques et finaux.
 	 */
 	public static final ArrayList<ILogHandler> sharedHandlers = new ArrayList<ILogHandler>() {
 		private static final long serialVersionUID = 1L;
@@ -23,6 +31,12 @@ public class LoggerFactory
 			add(handler);
 		}
 	};
+
+	/**
+	 * Liste de tous les loggers déjà créés. Cette liste de références sert à ne
+	 * pas recréer un {@link Logger} s'il en existe déjà un avec le nom demandé.
+	 */
+	private static final HashMap<String, Logger> loggers = new HashMap<String, Logger>();
 
 	/**
 	 * Ajoute un délégateur de logging dans un fichier.
@@ -35,7 +49,7 @@ public class LoggerFactory
 	{
 		FileHandler handler = new FileHandler(loggingFile);
 
-		sharedHandlers.add(handler);
+		addSharedHandler(handler);
 
 		return handler;
 	}
@@ -54,9 +68,16 @@ public class LoggerFactory
 	 * @param name Le nom du nouveau logger.
 	 * @return Le nouveau logger fraîchement créé.
 	 */
-	public static final BasicLogger getLogger(String name)
+	public static final Logger getLogger(String name)
 	{
-		return new BasicLogger(name);
+		Logger logger = loggers.get(name);
+
+		if (logger == null)
+		{
+			loggers.put(name, logger = new BasicLogger(name));
+		}
+
+		return logger;
 	}
 
 	/**
@@ -65,13 +86,13 @@ public class LoggerFactory
 	 * 
 	 * Typiquement, on pourra l'appeler de cette manière au début des classes
 	 * qui ont besoin d'un logger : <code>
-	 * private static final BasicLogger logger = LoggerFactory.getLogger(LaClassOuOnEst.class);
+	 * private static final Logger logger = LoggerFactory.getLogger(LaClassOuOnEst.class);
 	 * </code>
 	 * 
 	 * @param clazz La class pour laquelle il servira.
 	 * @return Le nouveau logger fraîchement créé.
 	 */
-	public static final BasicLogger getLogger(Class<?> clazz)
+	public static final Logger getLogger(Class<?> clazz)
 	{
 		return getLogger(clazz.getSimpleName());
 	}
