@@ -152,35 +152,33 @@ public class Wylog extends MarkerIgnoringBase
     {
         private static boolean INITIALIZED = false;
 
-        public static int DEFAULT_LOG_LEVEL = LOG_LEVEL_INFO;
-        public static boolean SHOW_DATE_TIME = true;
-        public static String DATE_TIME_FORMAT_STR = "yyyy-MM-dd HH:mm:ss";
-        public static DateFormat DATE_FORMATTER = null;
-        public static boolean SHOW_THREAD_NAME = false;
-        public static boolean SHOW_LOG_NAME = true;
-        public static boolean SHOW_SHORT_LOG_NAME = true;
-        public static String LOG_FILE = "stdout";
-        public static List<PrintStream> TARGET_STREAMS = null;
-        public static boolean LEVEL_IN_BRACKETS = true;
-        public static String WARN_LEVEL_STRING = "WARN";
+        private static int DEFAULT_LOG_LEVEL = LOG_LEVEL_INFO;
+        private static boolean SHOW_DATE_TIME = true;
+        private static String DATE_TIME_FORMAT_STR = "yyyy-MM-dd HH:mm:ss";
+        private static DateFormat DATE_FORMATTER = null;
+        private static boolean SHOW_THREAD_NAME = false;
+        private static boolean SHOW_LOG_NAME = true;
+        private static boolean SHOW_SHORT_LOG_NAME = true;
+        private static String LOG_FILE = "stdout";
+        private static List<PrintStream> TARGET_STREAMS = null;
+        private static boolean LEVEL_IN_BRACKETS = true;
+        private static String WARN_LEVEL_STRING = "WARN";
 
         /**
          * All system properties used by <code>SimpleLogger</code> start with
          * this prefix
          */
-        public static final String SYSTEM_PREFIX = "net.wytrem.wylog.";
+        private static final String SYSTEM_PREFIX = "net.wytrem.wylog.";
 
-        public static final String DEFAULT_LOG_LEVEL_KEY = SYSTEM_PREFIX + "defaultLogLevel";
-        public static final String SHOW_DATE_TIME_KEY = SYSTEM_PREFIX + "showDateTime";
-        public static final String DATE_TIME_FORMAT_KEY = SYSTEM_PREFIX + "dateTimeFormat";
-        public static final String SHOW_THREAD_NAME_KEY = SYSTEM_PREFIX + "showThreadName";
-        public static final String SHOW_LOG_NAME_KEY = SYSTEM_PREFIX + "showLogName";
-        public static final String SHOW_SHORT_LOG_NAME_KEY = SYSTEM_PREFIX + "showShortLogName";
-        public static final String LOG_FILE_KEY = SYSTEM_PREFIX + "logFile";
-        public static final String LEVEL_IN_BRACKETS_KEY = SYSTEM_PREFIX + "levelInBrackets";
-        public static final String WARN_LEVEL_STRING_KEY = SYSTEM_PREFIX + "warnLevelString";
-
-        public static final String LOG_KEY_PREFIX = SYSTEM_PREFIX + "log.";
+        private static final String DEFAULT_LOG_LEVEL_KEY = SYSTEM_PREFIX + "defaultLogLevel";
+        private static final String SHOW_DATE_TIME_KEY = SYSTEM_PREFIX + "showDateTime";
+        private static final String DATE_TIME_FORMAT_KEY = SYSTEM_PREFIX + "dateTimeFormat";
+        private static final String SHOW_THREAD_NAME_KEY = SYSTEM_PREFIX + "showThreadName";
+        private static final String SHOW_LOG_NAME_KEY = SYSTEM_PREFIX + "showLogName";
+        private static final String SHOW_SHORT_LOG_NAME_KEY = SYSTEM_PREFIX + "showShortLogName";
+        private static final String LOG_FILE_KEY = SYSTEM_PREFIX + "logFile";
+        private static final String LEVEL_IN_BRACKETS_KEY = SYSTEM_PREFIX + "levelInBrackets";
+        private static final String WARN_LEVEL_STRING_KEY = SYSTEM_PREFIX + "warnLevelString";
 
         private static String getStringProperty(String name)
         {
