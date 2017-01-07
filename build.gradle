@@ -5,7 +5,7 @@ apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
 group = 'net.wytrem'
-version = '1.2'
+version = '2.0'
 archivesBaseName = 'wylog'
 
 sourceCompatibility = 1.6
