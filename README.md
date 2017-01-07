@@ -68,7 +68,13 @@ Avalaible properties:
  * **net.wytrem.wylog.warnLevelString** - The string value output for the warn level. Defaults 
 	 to WARN. 
 
-Default logging style looks like:
+Example:
+```java
+net.wytrem.wylog.defaultLogLevel=debug
+net.wytrem.wylog.showThreadName=true
+```
+
+Default logging style looks like this:
 ```
 [2017-01-07 10:50:33] [INFO] [WylogTest] info message
 [2017-01-07 10:50:33] [WARN] [WylogTest] warning message
